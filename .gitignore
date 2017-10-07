@@ -1,3 +1,2 @@
-autoload
-bundle
+bundle/*/doc/tags
 .netrwhist

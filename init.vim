@@ -1,4 +1,7 @@
 " Section: Plugins
+" Make pathogen.vim be a submodule
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+
 execute pathogen#infect()
 colorscheme landscape
 
