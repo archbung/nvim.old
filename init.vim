@@ -1,9 +1,7 @@
 " Section: Plugins
 " Make pathogen.vim be a submodule
 runtime bundle/vim-pathogen/autoload/pathogen.vim
-
 execute pathogen#infect()
-colorscheme landscape
 
 " Scaladoc comment using the recommended indentation.
 let g:scala_scaladoc_indent = 1
@@ -20,6 +18,7 @@ let g:vim_markdown_folding_style_pythonic = 1
 " Neomake
 " Open list automatically
 let g:neomake_open_list = 2
+let g:neomake_rust_cargo_command = ['test', '--no-run']
 
 " Run neomake automatically depending on AC status
 function! MyOnBattery()
@@ -87,6 +86,10 @@ endfunction
 " highlighting, omni-completion and other useful settings.
 filetype plugin indent on
 syntax on
+
+" True colors ftw
+set termguicolors
+colorscheme landscape
 
 " 'matchit.vim' is built-in so let's enable it!
 " Hit '%' on 'if' to jump to 'else'.
