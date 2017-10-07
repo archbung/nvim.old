@@ -61,3 +61,9 @@
 [submodule "bundle/vim-tmux-navigator"]
 	path = bundle/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator
+[submodule "bundle/vimbufsync"]
+	path = bundle/vimbufsync
+	url = https://github.com/let-def/vimbufsync
+[submodule "bundle/coquille"]
+	path = bundle/coquille
+	url = https://github.com/the-lambda-church/coquille
