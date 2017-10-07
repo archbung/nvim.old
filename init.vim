@@ -3,17 +3,27 @@
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
+" Rust
+" Autoformat on every save
+let g:rustfmt_autosave = 1
+
+" Scala
 " Scaladoc comment using the recommended indentation.
 let g:scala_scaladoc_indent = 1
 
-" Haskell highlighting
+" Haskell
+" Optional highlighting
 let g:haskell_enable_quantification = 1
-
-" Pythonic folding for markdown
-let g:vim_markdown_folding_style_pythonic = 1
-
 " Don't start intero automatically
 "let g:intero_start_immediately = 0
+
+" Markdown
+" Use pythonic folding
+let g:vim_markdown_folding_style_pythonic = 1
+
+" Ledger
+" Hide blank lines after transactions
+let g:ledger_fold_blanks = 1
 
 " Neomake
 " Open list automatically
@@ -146,15 +156,13 @@ augroup END
 augroup vimrc
 	autocmd!
 	autocmd Filetype vim setlocal tabstop=2 
-        \ softtabstop=2 shiftwidth=2
-				\ expandtab 
+        \ softtabstop=2 shiftwidth=2 expandtab 
 augroup END
 
 augroup cpp
   autocmd!
   autocmd Filetype c,cpp setlocal tabstop=8
-        \ softtabstop=8 shiftwidth=8
-        \ noexpandtab
+        \ softtabstop=8 shiftwidth=8 noexpandtab
 augroup END
 
 augroup pencil
@@ -164,7 +172,9 @@ augroup END
 
 augroup ledger
   autocmd!
-  autocmd BufNewFile,BufRead *.ledger set filetype ledger
+  autocmd BufNewFile,BufRead *.ledger set filetype=ledger
+  autocmd Filetype ledger setlocal tabstop=4
+        \ softtabstop=4 shiftwidth=4 noexpandtab
 augroup END
 
 augroup haskell
