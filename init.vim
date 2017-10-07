@@ -11,6 +11,9 @@ let g:haskell_enable_quantification = 1
 " Pythonic folding for markdown
 let g:vim_markdown_folding_style_pythonic = 1
 
+" Don't start intero automatically
+let g:intero_start_immediately = 0
+
 " CtrlP
 " Use ripgrep
 if executable('rg')
@@ -143,5 +146,35 @@ augroup ledger
   autocmd BufNewFile,BufRead *.ledger set filetype ledger
 augroup END
 
+augroup haskell
+  autocmd!
+  " Background process and window management
+  autocmd Filetype haskell nnoremap <silent> <leader>is :InteroStart<CR>
+  autocmd Filetype haskell nnoremap <silent> <leader>ik :InteroKill<CR>
+  
+  " Intero split horizontally
+  autocmd Filetype haskell nnoremap <silent> <leader>io :InteroOpen<CR>
+  " Intero split vertically
+  autocmd Filetype haskell nnoremap <silent> <leader>iov :InteroOpen<CR><C-W>H
+  autocmd Filetype haskell nnoremap <silent> <leader>ih :InteroHide<CR>
+
+  " Reload on save
+  autocmd BufWritePost *.hs InteroReload
+
+  " Load individual modules
+  autocmd Filetype haskell nnoremap <silent> <leader>il :InteroLoadCurrentModule<CR>
+  autocmd Filetype haskell nnoremap <silent> <leader>if :InteroLoadCurrentFile<CR>
+
+  " Type-related information
+  autocmd Filetype haskell map <silent> <leader>t <Plug>InteroGenericType
+  autocmd Filetype haskell map <silent> <leader>T <Plug>InteroType
+  autocmd Filetype haskell nnoremap <silent> <leader>it :InteroTypeInsert<CR>
+
+  " Navigation
+  autocmd Filetype haskell nnoremap <silent> <leader>jd :InteroGoToDef<CR>
+
+  " Managing targets with prompt
+  autocmd Filetype haskell nnoremap <leader>ist :InteroSetTargets<SPACE>
+augroup END
 
 " vim:set foldmethod=expr foldexpr=getline(v\:lnum)=~'^\"\ Section\:'?'>1'\:getline(v\:lnum)=~#'^fu'?'a1'\:getline(v\:lnum)=~#'^endf'?'s1'\:'=':
