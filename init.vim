@@ -15,7 +15,22 @@ let g:haskell_enable_quantification = 1
 let g:vim_markdown_folding_style_pythonic = 1
 
 " Don't start intero automatically
-let g:intero_start_immediately = 0
+"let g:intero_start_immediately = 0
+
+" Neomake
+" Open list automatically
+let g:neomake_open_list = 2
+
+" Run neomake automatically depending on AC status
+function! MyOnBattery()
+  return readfile('/sys/class/power_supply/AC/online') == ['0']
+endfunction
+
+if MyOnBattery()
+  call neomake#configure#automake('w')
+else
+  call neomake#configure#automake('nw', 1000)
+endif
 
 " CtrlP
 " Use ripgrep
