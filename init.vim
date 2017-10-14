@@ -41,6 +41,18 @@ else
   call neomake#configure#automake('nw', 1000)
 endif
 
+" SnipMate
+" Use Python 3.x
+let g:UltiSnipsUsePythonVersion = 3
+
+" Trigger configuration
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<c-b>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
+
+" Vertical split
+let g:UltiSnipsEditSplit = "vertical"
+
 " CtrlP
 " Use ripgrep
 if executable('rg')
