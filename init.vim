@@ -180,6 +180,12 @@ augroup vimrc
         \ softtabstop=2 shiftwidth=2 expandtab 
 augroup END
 
+augroup tex
+  autocmd!
+  autocmd Filetype tex setlocal tabstop=2
+        \ softtabstop=2 shiftwidth=2 noexpandtab
+augroup END
+
 augroup cpp
   autocmd!
   autocmd Filetype c,cpp setlocal tabstop=8
@@ -227,6 +233,11 @@ augroup haskell
 
   " Managing targets with prompt
   autocmd Filetype haskell nnoremap <leader>ist :InteroSetTargets<SPACE>
+augroup END
+
+augroup scala
+  autocmd!
+  autocmd BufWritePost *.scala Neomake! sbt
 augroup END
 
 " vim:set foldmethod=expr foldexpr=getline(v\:lnum)=~'^\"\ Section\:'?'>1'\:getline(v\:lnum)=~#'^fu'?'a1'\:getline(v\:lnum)=~#'^endf'?'s1'\:'=':
