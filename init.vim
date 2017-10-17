@@ -25,6 +25,9 @@ let g:vim_markdown_folding_style_pythonic = 1
 " Hide blank lines after transactions
 let g:ledger_fold_blanks = 1
 
+" VimTex
+let g:tex_flavor = 'latex'
+
 " Neomake
 " Open list automatically
 let g:neomake_open_list = 2
@@ -66,6 +69,7 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " Lightline
+" Modeline configurations
 let g:lightline = {
       \ 'colorscheme': 'landscape',
       \ 'active': {
@@ -151,6 +155,8 @@ nnoremap k gk
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 
+tnoremap <C-[> <C-\><C-n>
+
 " Allow saving of files when forget to sudo
 cmap w!! w !sudo tee > /dev/null %
 
@@ -159,6 +165,9 @@ cmap w!! w !sudo tee > /dev/null %
 " Remember last cursor position
 augroup basic
   autocmd!
+  " go to insert mode when it's terminal buffer
+  autocmd BufEnter *
+        \ if &buftype == 'terminal' | :startinsert | endif
   autocmd BufReadPost *
         \ if line("'\"") > 1 && line("'\"") <= line("$") |
         \   exe "normal! g`\"" |
