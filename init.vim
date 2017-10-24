@@ -28,21 +28,10 @@ let g:ledger_fold_blanks = 1
 " VimTex
 let g:tex_flavor = 'latex'
 
-" Neomake
-" Open list automatically
-let g:neomake_open_list = 2
-let g:neomake_rust_cargo_command = ['test', '--no-run']
+" Ale
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
 
-" Run neomake automatically depending on AC status
-function! MyOnBattery()
-  return readfile('/sys/class/power_supply/AC/online') == ['0']
-endfunction
-
-if MyOnBattery()
-  call neomake#configure#automake('w')
-else
-  call neomake#configure#automake('nw', 1000)
-endif
 
 " SnipMate
 " Use Python 3.x
@@ -74,7 +63,11 @@ let g:lightline = {
       \ 'colorscheme': 'landscape',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename'] ]
+      \             [ 'gitbranch', 'readonly', 'filename'] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'linter_warnings', 'linter_errors', 'linter_ok' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
@@ -83,7 +76,41 @@ let g:lightline = {
       \   'filename': 'LightlineFilename',
       \   'readonly': 'LightlineReadonly',
       \ },
+      \ 'component_expand': {
+      \   'linter_warnings': 'LightlineLinterWarnings',
+      \   'linter_errors': 'LightlineLinterErrors',
+      \   'linter_ok': 'LightlineLinterOK'
+      \ },
+      \ 'component_type': {
+      \   'linter_warnings': 'warning',
+      \   'linter_errors': 'error',
+      \   'linter_ok': 'ok'
+      \ },
       \ }
+
+" Update modeline everytime ALE does its thing
+autocmd User ALELint call lightline#update()
+
+function! LightlineLinterWarnings() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d --', all_non_errors)
+endfunction
+
+function! LightlineLinterErrors() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d >>', all_errors)
+endfunction
+
+function! LightlineLinterOK() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '✓' : ''
+endfunction
 
 " Trim the fileformat and encoding info on narrow windows
 function! LightlineFileformat()
@@ -145,6 +172,7 @@ set textwidth=80
 set formatoptions=q,r,n,1
 
 set noshowmode                  " Mode is indicated by lightline.vim
+set lazyredraw
 
 
 " Section: Keybindings
@@ -154,6 +182,9 @@ nnoremap j gj
 nnoremap k gk
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
+
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 tnoremap <C-[> <C-\><C-n>
 
@@ -237,7 +268,7 @@ augroup END
 
 augroup scala
   autocmd!
-  autocmd BufWritePost *.scala Neomake! sbt
+  "autocmd BufWritePost *.scala Neomake! sbt
 augroup END
 
 " vim:set foldmethod=expr foldexpr=getline(v\:lnum)=~'^\"\ Section\:'?'>1'\:getline(v\:lnum)=~#'^fu'?'a1'\:getline(v\:lnum)=~#'^endf'?'s1'\:'=':

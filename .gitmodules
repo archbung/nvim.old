@@ -52,9 +52,6 @@
 [submodule "bundle/vim-pencil"]
 	path = bundle/vim-pencil
 	url = https://github.com/reedes/vim-pencil
-[submodule "bundle/neomake"]
-	path = bundle/neomake
-	url = https://github.com/neomake/neomake
 [submodule "bundle/vim-gutentags"]
 	path = bundle/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags
@@ -82,3 +79,6 @@
 [submodule "bundle/vimtex"]
 	path = bundle/vimtex
 	url = https://github.com/lervag/vimtex
+[submodule "bundle/ale"]
+	path = bundle/ale
+	url = https://github.com/w0rp/Ale
