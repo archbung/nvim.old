@@ -33,8 +33,6 @@ let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 
 " Coquille
-" Use FN mappings
-autocmd Filetype coq call coquille#FNMapping()
 
 " SnipMate
 " Use Python 3.x
@@ -269,9 +267,13 @@ augroup haskell
   autocmd Filetype haskell nnoremap <leader>ist :InteroSetTargets<SPACE>
 augroup END
 
-augroup scala
+augroup coq
   autocmd!
-  "autocmd BufWritePost *.scala Neomake! sbt
+  " Use FN mappings
+  autocmd Filetype coq call coquille#FNMapping()
+
+  autocmd Filetype coq setlocal tabstop=4
+        \ softtabstop=4 shiftwidth=4 expandtab
 augroup END
 
 " vim:set foldmethod=expr foldexpr=getline(v\:lnum)=~'^\"\ Section\:'?'>1'\:getline(v\:lnum)=~#'^fu'?'a1'\:getline(v\:lnum)=~#'^endf'?'s1'\:'=':
