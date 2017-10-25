@@ -32,6 +32,9 @@ let g:tex_flavor = 'latex'
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 
+" Coquille
+" Use FN mappings
+autocmd Filetype coq call coquille#FNMapping()
 
 " SnipMate
 " Use Python 3.x
